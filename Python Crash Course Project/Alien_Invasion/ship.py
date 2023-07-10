@@ -3,7 +3,7 @@ import pygame
 
 class Ship():
 
-    def __init__(self, ai_settings,screen) -> None:
+    def __init__(self, ai_settings, screen) -> None:
         """Initialize the ship and set its starting position."""
         self.screen = screen
         self.ai_settings = ai_settings
@@ -27,9 +27,9 @@ class Ship():
     def update(self):
         """Update the ship's position based on the movement flag."""
         # Update the ship's center value, not the rect
-        if self.moving_right and self.rect.right<self.screen_rect.right:
+        if self.moving_right and self.rect.right < self.screen_rect.right:
             self.center += self.ai_settings.ship_speed_factor
-        if self.moving_left and self.rect.left>self.screen_rect.left:
+        if self.moving_left and self.rect.left > self.screen_rect.left:
             self.center -= self.ai_settings.ship_speed_factor
 
         # Update rect object from self.center.
