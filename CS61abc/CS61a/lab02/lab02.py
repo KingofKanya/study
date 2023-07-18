@@ -15,7 +15,7 @@ def lambda_curry2(func):
     3
     """
     "*** YOUR CODE HERE ***"
-    return ______
+    return lambda x:lambda y:func(x,y)
 
 
 
@@ -46,6 +46,15 @@ def count_cond(condition):
     >>> count_primes(20)   # 2, 3, 5, 7, 11, 13, 17, 19
     8
     """
+    def p(n):
+        i,count=1,0
+        while i<=n:
+            if condition(n,i):
+                count+=1
+            i+=1
+        return count
+        # 不可以用print(count),因为在测试用例is_primer中,会调用此函数,在子函数中打印多余内容
+    return p 
     "*** YOUR CODE HERE ***"
 
 
@@ -81,6 +90,7 @@ def composite_identity(f, g):
     >>> b1(4)                            # (4 + 1)^2 != 4^2 + 1
     False
     """
+    return lambda x:f(g(x))==g(f(x))
     "*** YOUR CODE HERE ***"
 
 
@@ -111,5 +121,20 @@ def cycle(f1, f2, f3):
     >>> do_two_cycles(1)
     19
     """
+    def circuit(n):
+        def a(res):
+            order = 0
+            while order < n:
+                p = order % 3
+                if p == 0:
+                    res = f1(res)
+                elif p == 1:
+                    res = f2(res)
+                else:
+                    res = f3(res)
+                order += 1
+            return res
+        return a
+    return circuit
     "*** YOUR CODE HERE ***"
 
