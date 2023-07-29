@@ -128,6 +128,19 @@ def autocorrect(user_word, valid_words, diff_function, limit):
     than LIMIT.
     """
     # BEGIN PROBLEM 5
+    min_diff = 100000
+    t = None
+    for each in valid_words:
+        if each == user_word:
+            return user_word
+        a = diff_function(user_word,each,limit)
+        if a < min_diff:
+            min_diff = a
+            t = each
+    if min_diff > limit:
+        return user_word
+    else:
+        return t
     "*** YOUR CODE HERE ***"
     # END PROBLEM 5
 
@@ -138,31 +151,36 @@ def shifty_shifts(start, goal, limit):
     their lengths.
     """
     # BEGIN PROBLEM 6
-    assert False, 'Remove this line'
+    # Use 
+    # If the number of characters that must change is greater than 
+    # limit, then shifty_shifts should return any number larger than 
+    # limit and should minimize the amount of computation needed to do so.
+    # 计算量太大,通不过测试
+    if limit<0:
+        return 0
+    if len(start)==0 or len(goal)==0:
+        return max(len(start),len(goal))
+    if start[0] != goal[0]:
+        return 1 + shifty_shifts(start[1:],goal[1:],limit-1)
+    else:
+        return shifty_shifts(start[1:],goal[1:],limit)
     # END PROBLEM 6
 
 
 def pawssible_patches(start, goal, limit):
     """A diff function that computes the edit distance from START to GOAL."""
-    assert False, 'Remove this line'
-
-    if ______________: # Fill in the condition
-        # BEGIN
-        "*** YOUR CODE HERE ***"
-        # END
-
-    elif ___________: # Feel free to remove or add additional cases
-        # BEGIN
-        "*** YOUR CODE HERE ***"
-        # END
-
+    # minimize the amount of computation needed to do so
+    if len(start)==0 or len(goal)==0:
+        return max(len(start),len(goal))
+    if limit < 0:
+        return 1
+    elif start[0]==goal[0]:
+        return pawssible_patches(start[1:],goal[1:],limit)
     else:
-        add_diff = ... # Fill in these lines
-        remove_diff = ...
-        substitute_diff = ...
-        # BEGIN
-        "*** YOUR CODE HERE ***"
-        # END
+        add_diff = 1 + pawssible_patches(goal[0]+start,goal,limit-1)
+        remove_diff = 1 + pawssible_patches(start[1:],goal,limit-1)
+        substitute_diff = 1 + pawssible_patches(goal[0]+start[1:],goal,limit-1)
+        return min(add_diff,remove_diff,substitute_diff)
 
 
 def final_diff(start, goal, limit):
@@ -178,6 +196,15 @@ def final_diff(start, goal, limit):
 def report_progress(typed, prompt, user_id, send):
     """Send a report of your id and progress so far to the multiplayer server."""
     # BEGIN PROBLEM 8
+    p = 0
+    length = len(prompt)
+    for a in range(0,len(typed)):
+        if typed[a] == prompt[a]:
+            p = p + 1
+        else:
+            break
+    send({'id': user_id, 'progress': p/length})
+    return p/length
     "*** YOUR CODE HERE ***"
     # END PROBLEM 8
 
@@ -204,6 +231,7 @@ def time_per_word(times_per_player, words):
         words: a list of words, in the order they are typed.
     """
     # BEGIN PROBLEM 9
+    
     "*** YOUR CODE HERE ***"
     # END PROBLEM 9
 
